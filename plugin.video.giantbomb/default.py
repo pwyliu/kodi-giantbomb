@@ -5,7 +5,7 @@ import xbmcaddon
 import xbmcplugin
 import xbmcgui
 
-API_PATH = 'http://api.giantbomb.com'
+API_PATH = 'https://www.giantbomb.com/api'
 API_KEY = 'fa96542d69b4af7f31c2049ace5d89e84e225bef' # Default API key
 my_addon = xbmcaddon.Addon('plugin.video.giantbomb')
 
@@ -13,7 +13,7 @@ def CATEGORIES():
     account_linked = False
     user_api_key = my_addon.getSetting('api_key')
     if user_api_key:
-        response = urllib2.urlopen(API_PATH + '/chats/?api_key=' + user_api_key + '&format=json')
+        response = urllib2.urlopen(API_PATH + '/video_types/?api_key=' + user_api_key + '&format=json')
         data = simplejson.loads(response.read())
         if data['status_code'] == 100:
             # Revert to the default key
@@ -142,9 +142,15 @@ def VIDEOLINKS(url, name):
             if 'hd_url' in vid:
                 url = vid['hd_url'] + '&api_key=' + API_KEY
             else:
-                url = vid['high_url']
+                if vid['high_url'] is not None:
+                    url = vid['high_url']
+                else:
+                    continue
         else:
-            url = vid[quality]
+            if vid[quality] is not None:
+                url = vid[quality]
+            else:
+                continue
         thumbnail = vid['image']['super_url']
         addLink(name,url,thumbnail)
 
