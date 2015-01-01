@@ -1,3 +1,6 @@
+[B]4.0.1[/B]
+- Fork from original project, which was no longer maintained. Fixes to install on Kodi.
+
 [B]3.5[/B]
 - Added Chrono Trigger endurance run submenu
 
