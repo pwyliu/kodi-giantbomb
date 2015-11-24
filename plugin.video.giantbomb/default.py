@@ -12,6 +12,7 @@ my_addon = xbmcaddon.Addon('plugin.video.giantbomb')
 def CATEGORIES():
     account_linked = False
     user_api_key = my_addon.getSetting('api_key')
+
     if user_api_key:
         response = urllib2.urlopen(API_PATH + '/video_types/?api_key=' + user_api_key + '&format=json')
         data = simplejson.loads(response.read())
@@ -36,10 +37,7 @@ def CATEGORIES():
         name = cat['name']
         url = API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=' + str(cat['id']) + '&sort=-publish_date&format=json'
         iconimage = ''
-        if str(cat['id']) == '5':
-            addDir(name, '5', 1, '')
-        else:
-            addDir(name, url, 2, '')
+        addDir(name, url, 2, '')
 
     name = 'Search'
     iconimage = ''
@@ -75,10 +73,9 @@ def INDEX(url):
             query = keyboard.getText().replace(' ', '%20')
             url = API_PATH + '/search/?api_key=' + API_KEY + '&resources=video&query=' + query + '&format=json'
             VIDEOLINKS(url, 'search')
-
     elif url == 'link':
         dialog = xbmcgui.Dialog()
-        ok = dialog.ok("Let's do this.", "To link your account, visit", "www.giantbomb.com/xbmc to get a link code.", "Enter this code on the next screen.")
+        ok = dialog.ok("Let's do this.", "To link your account, visit", "https://www.giantbomb.com/xbmc to get a link code.", "Enter this code on the next screen.")
 
         keyboard = xbmc.Keyboard("", 'Enter your link code.', False)
         keyboard.doModal()
@@ -90,10 +87,7 @@ def INDEX(url):
                 ok = dialog.ok("We're really sorry, but...", "We could not link your account.", "Make sure the code you entered is correct", "and try again.")
             CATEGORIES()
     else:
-        addDir('Chrono Trigger', url + '&CT', 2, '')
-        addDir('Deadly Premonition', url + '&DP', 2, '')
-        addDir('Persona 4', url + '&P4', 2, '')
-        addDir('The Matrix Online: Not Like This', url + '&MO', 2, '')
+        CATEGORIES()
 
 def VIDEOLINKS(url, name):
     if my_addon.getSetting('api_key'):
@@ -107,40 +101,15 @@ def VIDEOLINKS(url, name):
     elif q_setting == 2:
         quality = 'high_url'
 
-    if url.endswith('&CT'):
-        response = urllib2.urlopen(API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=5&offset=240&format=json')
-        video_data = simplejson.loads(response.read())['results']
-        response.close()
-    elif url.endswith('&DP'):
-        response = urllib2.urlopen(API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=5&offset=161&limit=79&format=json')
-        video_data = simplejson.loads(response.read())['results']
-        response.close()
-    elif url.endswith('&P4'):
-        response = urllib2.urlopen(API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=5&format=json')
-        video_data = simplejson.loads(response.read())['results']
-        response.close()
-
-        response = urllib2.urlopen(API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=5&offset=100&limit=61&format=json')
-        video_data += simplejson.loads(response.read())['results']
-        response.close()
-
-        video_data = [video for video in video_data if not video['name'].startswith('The Matrix Online')]
-    elif url.endswith('&MO'):
-        response = urllib2.urlopen(API_PATH + '/videos/?api_key=' + API_KEY + '&video_type=5&offset=105&limit=21&format=json')
-        video_data = simplejson.loads(response.read())['results']
-        response.close()
-
-        video_data = [video for video in video_data if video['name'].startswith('The Matrix Online')]
-    else:
-        response = urllib2.urlopen(url)
-        video_data = simplejson.loads(response.read())['results']
-        response.close()
+    response = urllib2.urlopen(url)
+    video_data = simplejson.loads(response.read())['results']
+    response.close()
 
     for vid in video_data:
         name = vid['name']
         if not quality:
             if 'hd_url' in vid:
-                url = vid['hd_url'] + '&api_key=' + API_KEY
+                url = vid['hd_url']
             else:
                 if vid['high_url'] is not None:
                     url = vid['high_url']
@@ -169,7 +138,6 @@ def get_params():
             splitparams=pairsofparams[i].split('=')
             if (len(splitparams))==2:
                 param[splitparams[0]]=splitparams[1]
-
     return param
 
 def addLink(name, url, iconimage):

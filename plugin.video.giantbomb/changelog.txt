@@ -1,3 +1,6 @@
+[B]4.0.2[/B]
+- Stop appending API key to video links, and remove special handling for endurance runs. I still love you, endurance runs.
+
 [B]4.0.1[/B]
 - Fork from original project, which was no longer maintained. Fixes to install on Kodi.
 

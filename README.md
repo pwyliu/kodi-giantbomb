@@ -23,5 +23,5 @@ Instead, it's better to create the zip from the command line. For example:
 ```bash
 git clone https://github.com/pwyliu/xbmc.git
 cd xbmc
-zip -r plugin.video.giantbomb-4.0.1.zip plugin.video.giantbomb
+zip -r plugin.video.giantbomb-4.0.2.zip plugin.video.giantbomb
 ```

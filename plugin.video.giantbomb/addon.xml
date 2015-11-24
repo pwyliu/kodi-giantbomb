@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.giantbomb" name="Giant Bomb" version="4.0.1" provider-name="pwyliu">
+<addon id="plugin.video.giantbomb" name="Giant Bomb" version="4.0.2" provider-name="pwyliu">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
     <import addon="script.module.simplejson" version="3.3.0"/>
@@ -9,14 +9,14 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Giant Bomb video plugin</summary>
-    <description>Giant Bomb is a video game enthusiast site with a sense of humor. Watch Jeff Gerstmann and crew in thousands of original game videos, reviews and previews.</description>
+    <description lang="en">Giant Bomb is a video game enthusiast site with a sense of humor. Watch Jeff Gerstmann and crew in thousands of original game videos, reviews and previews.</description>
     <platform>all</platform>
     <language>en</language>
     <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
     <forum></forum>
     <website></website>
     <source>https://github.com/pwyliu/xbmc</source>
-    <email></email>
+    <email>paul at ferociouspings.com</email>
     <disclaimer>Forked from https://github.com/WhiskeyMedia/xbmc</disclaimer>
   </extension>
 </addon>
