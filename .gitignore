@@ -3,7 +3,7 @@ instance/
 .idea/
 .DS_Store
 user_data.db
-.zip
+*.zip
 
 .env
 *.swp
